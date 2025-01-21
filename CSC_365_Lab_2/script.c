@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
+#include <stdint.h>
+#include <float.h>
 
 typedef struct {
     int Id;
@@ -18,7 +21,7 @@ int parsing(char *line, Info *information){
     if(!token){
         return -1;
     }
-    strcpy(information->Id, token);
+    information->Id = atoi(token);
 
 
     token= strtok(NULL, ",");
