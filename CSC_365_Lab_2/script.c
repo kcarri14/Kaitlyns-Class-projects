@@ -6,11 +6,10 @@
 #include <float.h>
 
 typedef struct {
-    char city[50];
-    char airline[50];
-    char abbrev[50];
-    char country[50];
-    char countryabbrev[50];
+    int integer;
+    int integer2;
+    char abbrev[10];
+    char country[10];
 }Info;
 
 int parsing(char *line, Info *information){
@@ -20,14 +19,14 @@ int parsing(char *line, Info *information){
     if(!token){
         return -1;
     }
-    strcpy(information->city, token);
+    information->integer = atoi(token);
 
 
     token= strtok(NULL, ",");
     if(!token){
         return -1;
     }
-    strcpy(information->airline, token);
+    information->integer2 = atoi(token);
 
     token= strtok(NULL, ",");
     if(!token){
@@ -40,12 +39,6 @@ int parsing(char *line, Info *information){
         return -1;
     }
     strcpy(information->country, token);
-
-    token= strtok(NULL, ",");
-    if(!token){
-        return -1;
-    }
-    strcpy(information->countryabbrev, token);
 
     return 0;
 }
@@ -85,7 +78,7 @@ int main(int argc, char*argv[]){
         return 1;
     }
     for(int i = 0; i < count; i++){
-        printf("INSERT INTO airports (City, AirportCode, AirportName, Country, CountryAbbrev) VALUES ('%s', '%s', '%s', '%s', '%s');\n", information[i].city, information[i].airline, information[i].abbrev, information[i].country, information[i].countryabbrev);
+        printf("INSERT INTO flights (Airline, FlightNo, SourceAirport, DestAirport) VALUES (%d, %d, '%s', '%s');\n", information[i].integer, information[i].integer2, information[i].abbrev, information[i].country);
     }
     free(information);
     return 0;
