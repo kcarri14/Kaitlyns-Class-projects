@@ -6,18 +6,16 @@
 #include <float.h>
 
 typedef struct {
-    char city[30];
+    char city[50];
     char airline[50];
-    char abbrev[30];
-    char country[30];
-    char countryabbrev[3];
+    char abbrev[50];
+    char country[50];
+    char countryabbrev[50];
 }Info;
 
 int parsing(char *line, Info *information){
     char buffer[4000];
     strcpy(buffer,line);
-
-
     char *token= strtok(buffer, ",");
     if(!token){
         return -1;
@@ -69,7 +67,6 @@ int load_data(char *filename, Info **info){
         }
         Info information;
         if(parsing(line, &information) == -1){
-            //printf("Error: line entry is malformed %d\n", line_num);
             continue;
         }
         (*info)[count++] = information;
