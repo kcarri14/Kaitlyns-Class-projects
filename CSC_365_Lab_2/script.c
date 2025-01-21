@@ -6,10 +6,11 @@
 #include <float.h>
 
 typedef struct {
-    int Id;
+    char city[30];
     char airline[50];
     char abbrev[30];
-    char country[3];
+    char country[30];
+    char countryabbrev[3];
 }Info;
 
 int parsing(char *line, Info *information){
@@ -21,7 +22,7 @@ int parsing(char *line, Info *information){
     if(!token){
         return -1;
     }
-    information->Id = atoi(token);
+    strcpy(information->city, token);
 
 
     token= strtok(NULL, ",");
@@ -41,6 +42,12 @@ int parsing(char *line, Info *information){
         return -1;
     }
     strcpy(information->country, token);
+
+    token= strtok(NULL, ",");
+    if(!token){
+        return -1;
+    }
+    strcpy(information->countryabbrev, token);
 
     return 0;
 }
@@ -81,7 +88,7 @@ int main(int argc, char*argv[]){
         return 1;
     }
     for(int i = 0; i < count; i++){
-        printf("INSERT INTO airlines (Id, Airline, Abbreviation, Country) VALUES (%d, '%s', '%s', '%s');\n", information[i].Id, information[i].airline, information[i].abbrev, information[i].country);
+        printf("INSERT INTO airports (City, AirportCode, AirportName, Country, CountryAbbrev) VALUES (%d, '%s', '%s', '%s');\n", information[i].city, information[i].airline, information[i].abbrev, information[i].country, information[i].countryabbrev);
     }
     free(information);
     return 0;
