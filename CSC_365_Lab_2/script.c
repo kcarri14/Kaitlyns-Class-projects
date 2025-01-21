@@ -81,7 +81,7 @@ int main(int argc, char*argv[]){
         return 1;
     }
     for(int i = 0; i < count; i++){
-        printf("INSERT INTO AIRLINES (ID, AIRLINE, ABBREV, COUNTRY) VALUES (%d, '%s', '%s', '%s');\n", information[i].Id, information[i].airline, information[i].abbrev, information[i].country);
+        printf("INSERT INTO airlines (Id, Airline, Abbreviation, Country) VALUES (%d, '%s', '%s', '%s');\n", information[i].Id, information[i].airline, information[i].abbrev, information[i].country);
     }
     free(information);
     return 0;
