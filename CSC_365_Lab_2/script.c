@@ -9,6 +9,37 @@ typedef struct {
     char country[3];
 }Info;
 
+int parsing(char *line, Info *information){
+    char buffer[4000];
+    strcpy(buffer,line);
+
+
+    char *token= strtok(buffer, ",");
+    if(!token){
+        return -1;
+    }
+    strcpy(information->Id, token);
+
+
+    token= strtok(NULL, ",");
+    if(!token){
+        return -1;
+    }
+    strcpy(information->airline, token);
+
+    token= strtok(NULL, ",");
+    if(!token){
+        return -1;
+    }
+    strcpy(information->abbrev, token);
+
+    token= strtok(NULL, ",");
+    if(!token){
+        return -1;
+    }
+    strcpy(information->country, token);
+}
+
 int load_data(char *filename, Info **info){
     FILE *file = fopen(filename, "r");
     if(!file){
