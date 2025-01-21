@@ -41,6 +41,8 @@ int parsing(char *line, Info *information){
         return -1;
     }
     strcpy(information->country, token);
+
+    return 0;
 }
 
 int load_data(char *filename, Info **info){
