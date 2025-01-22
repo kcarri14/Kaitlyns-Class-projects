@@ -7,8 +7,8 @@
 
 typedef struct {
     int integer;
-    char abbrev[10];
-    char country[10];
+    char abbrev[50];
+    char country[50];
 }Info;
 
 int parsing(char *line, Info *information){
