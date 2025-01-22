@@ -6,10 +6,9 @@
 #include <float.h>
 
 typedef struct {
-    char Id[50];
+    int integer;
     char flavor[50];
-    char abbrev[50];
-    char country[50];
+    int intger2;
 }Info;
 
 int parsing(char *line, Info *information){
@@ -19,7 +18,7 @@ int parsing(char *line, Info *information){
     if(!token){
         return -1;
     }
-    strcpy(information->Id, token);
+    information->integer = atoi(token);
 
     token= strtok(NULL, ",");
     if(!token){
@@ -31,15 +30,7 @@ int parsing(char *line, Info *information){
     if(!token){
         return -1;
     }
-    strcpy(information->abbrev, token);
-
-    token= strtok(NULL, ",");
-    if(!token){
-        return -1;
-    }
-    strcpy(information->country, token);
-
-
+    information->intger2 = atoi(token);
     return 0;
 }
 
@@ -78,7 +69,7 @@ int main(int argc, char*argv[]){
         return 1;
     }
     for(int i = 0; i < count; i++){
-        printf("INSERT INTO customers (GId, Flavor, Food, Price) VALUES ('%s', '%s', '%s', '%s');\n", information[i].Id, information[i].flavor,information[i].abbrev, information[i].country);
+        printf("INSERT INTO receipts (RNumber, SaleDate, Customer) VALUES (%d, '%s', %d);\n", information[i].integer, information[i].flavor,information[i].intger2);
     }
     free(information);
     return 0;
