@@ -72,7 +72,7 @@ int main(int argc, char*argv[]){
         return 1;
     }
     for(int i = 0; i < count; i++){
-        printf("INSERT INTO instruments (SongId, BandmateId, Instrument) VALUES (%d, %d, '%s');\n", information[i].integer, information[i].integer2, information[i].label);
+        printf("INSERT INTO performance (SongId, Bandmate, StagePosition) VALUES (%d, %d, '%s');\n", information[i].integer, information[i].integer2, information[i].label);
     }
     free(information);
     return 0;
