@@ -7,8 +7,8 @@
 
 typedef struct {
     int integer;
-    char flavor[50];
     int intger2;
+    char flavor[50];
 }Info;
 
 int parsing(char *line, Info *information){
@@ -24,13 +24,14 @@ int parsing(char *line, Info *information){
     if(!token){
         return -1;
     }
-    strcpy(information->flavor, token);
-
+    information->intger2 = atoi(token);
+    
     token= strtok(NULL, ",");
     if(!token){
         return -1;
     }
-    information->intger2 = atoi(token);
+    strcpy(information->flavor, token);
+
     return 0;
 }
 
@@ -69,7 +70,7 @@ int main(int argc, char*argv[]){
         return 1;
     }
     for(int i = 0; i < count; i++){
-        printf("INSERT INTO receipts (RNumber, SaleDate, Customer) VALUES (%d, '%s', %d);\n", information[i].integer, information[i].flavor,information[i].intger2);
+        printf("INSERT INTO items (Receipt, Ordinal, Item) VALUES (%d, %d, '%s');\n", information[i].integer, information[i].intger2, information[i].flavor);
     }
     free(information);
     return 0;
