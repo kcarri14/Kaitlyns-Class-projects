@@ -7,7 +7,6 @@
 
 typedef struct {
     int integer;
-    int integer2;
     char abbrev[10];
     char country[10];
 }Info;
@@ -20,13 +19,6 @@ int parsing(char *line, Info *information){
         return -1;
     }
     information->integer = atoi(token);
-
-
-    token= strtok(NULL, ",");
-    if(!token){
-        return -1;
-    }
-    information->integer2 = atoi(token);
 
     token= strtok(NULL, ",");
     if(!token){
@@ -78,7 +70,7 @@ int main(int argc, char*argv[]){
         return 1;
     }
     for(int i = 0; i < count; i++){
-        printf("INSERT INTO flights (Airline, FlightNo, SourceAirport, DestAirport) VALUES (%d, %d, '%s', '%s');\n", information[i].integer, information[i].integer2, information[i].abbrev, information[i].country);
+        printf("INSERT INTO customers (CId, LastName, FirstName) VALUES (%d, '%s', '%s');\n", information[i].integer, information[i].abbrev, information[i].country);
     }
     free(information);
     return 0;
