@@ -7,7 +7,9 @@
 
 typedef struct {
     int integer;
+    char title[50];
     int intger2;
+    char label[50];
     char flavor[50];
 }Info;
 
@@ -24,13 +26,27 @@ int parsing(char *line, Info *information){
     if(!token){
         return -1;
     }
+    strcpy(information->title, token);
+
+    token= strtok(NULL, ",");
+    if(!token){
+        return -1;
+    }
     information->intger2 = atoi(token);
-    
+
+    token= strtok(NULL, ",");
+    if(!token){
+        return -1;
+    }
+    strcpy(information->label, token);
+
     token= strtok(NULL, ",");
     if(!token){
         return -1;
     }
     strcpy(information->flavor, token);
+    
+    
 
     return 0;
 }
@@ -70,7 +86,7 @@ int main(int argc, char*argv[]){
         return 1;
     }
     for(int i = 0; i < count; i++){
-        printf("INSERT INTO items (Receipt, Ordinal, Item) VALUES (%d, %d, '%s');\n", information[i].integer, information[i].intger2, information[i].flavor);
+        printf("INSERT INTO albums (AId, Title, Year, Label, Type) VALUES (%d, '%s',%d, '%s', '%s');\n", information[i].integer, information[i].title, information[i].intger2, information[i].label, information[i].flavor);
     }
     free(information);
     return 0;
