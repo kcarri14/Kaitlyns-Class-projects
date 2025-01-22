@@ -7,7 +7,7 @@
 
 typedef struct {
     int integer;
-    char title[50];
+    int integer2;
     char label[50];
 }Info;
 
@@ -24,7 +24,7 @@ int parsing(char *line, Info *information){
     if(!token){
         return -1;
     }
-    strcpy(information->title, token);
+    information->integer2 = atoi(token);
 
     token= strtok(NULL, ",");
     if(!token){
@@ -72,7 +72,7 @@ int main(int argc, char*argv[]){
         return 1;
     }
     for(int i = 0; i < count; i++){
-        printf("INSERT INTO bands (Id, Firstname, Lastname) VALUES (%d, '%s', '%s');\n", information[i].integer, information[i].title, information[i].label);
+        printf("INSERT INTO instruments (SongId, BandmateId, Instrument) VALUES (%d, %d, '%s');\n", information[i].integer, information[i].integer2, information[i].label);
     }
     free(information);
     return 0;
