@@ -90,7 +90,7 @@ int main(int argc, char*argv[]){
         return 1;
     }
     for(int i = 0; i < count; i++){
-        printf("INSERT INTO albums_and_songs (album_name, ep, album_release, track_number, track_name, artist) VALUES ('%s','%s','%s', %d, '%s','%s');\n", information[i].name, information[i].ep, information[i].date, information[i].number, information[i].track_name, information[i].artist);
+        printf("INSERT INTO all_songs (album_name, ep, album_release, track_number, track_name, artist) VALUES ('%s','%s','%s', %d, '%s','%s');\n", information[i].name, information[i].ep, information[i].date, information[i].number, information[i].track_name, information[i].artist);
     }
     free(information);
     return 0;
