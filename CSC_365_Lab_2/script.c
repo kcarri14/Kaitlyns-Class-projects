@@ -6,9 +6,12 @@
 #include <float.h>
 
 typedef struct {
-    int integer;
-    int integer2;
-    char type[50];
+    char name[100];
+    char ep[100];
+    char date[100];
+    int number;
+    char track_name[100];
+    char artist[100];
 }Info;
 
 int parsing(char *line, Info *information){
@@ -18,19 +21,37 @@ int parsing(char *line, Info *information){
     if(!token){
         return -1;
     }
-    information->integer = atoi(token);
+    strcpy(information->name, token);
 
     token= strtok(NULL, ",");
     if(!token){
         return -1;
     }
-    information->integer2 = atoi(token);
+    strcpy(information->ep, token);
 
     token= strtok(NULL, ",");
     if(!token){
         return -1;
     }
-    strcpy(information->type, token);
+    strcpy(information->date, token);
+
+    token= strtok(NULL, ",");
+    if(!token){
+        return -1;
+    }
+    information->number = atoi(token);
+
+    token= strtok(NULL, ",");
+    if(!token){
+        return -1;
+    }
+    strcpy(information->track_name, token);
+    token= strtok(NULL, ",");
+    if(!token){
+        return -1;
+    }
+    strcpy(information->artist, token);
+
     return 0;
 }
 
@@ -69,7 +90,7 @@ int main(int argc, char*argv[]){
         return 1;
     }
     for(int i = 0; i < count; i++){
-        printf("INSERT INTO vocals (SongId,Bandmate,Type) VALUES (%d, %d, '%s');\n", information[i].integer, information[i].integer2, information[i].type);
+        printf("INSERT INTO albums_and_songs (album_name, ep, album_release, track_number, track_name, artist) VALUES ('%s','%s','%s', %d, '%s','%s');\n", information[i].name, information[i].ep, information[i].date, information[i].number, information[i].track_name, information[i].artist);
     }
     free(information);
     return 0;
