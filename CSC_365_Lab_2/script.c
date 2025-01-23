@@ -33,23 +33,6 @@ int parsing(char *line, Info *information){
     }
     strcpy(information->date, token);
 
-    token= strtok(NULL, ",");
-    if(!token){
-        return -1;
-    }
-    information->number = atoi(token);
-
-    token= strtok(NULL, ",");
-    if(!token){
-        return -1;
-    }
-    strcpy(information->track_name, token);
-    token= strtok(NULL, ",");
-    if(!token){
-        return -1;
-    }
-    strcpy(information->artist, token);
-
     return 0;
 }
 
