@@ -9,9 +9,7 @@ typedef struct {
     char name[100];
     char ep[100];
     char date[100];
-    int number;
-    char track_name[100];
-    char artist[100];
+
 }Info;
 
 int parsing(char *line, Info *information){
@@ -90,7 +88,7 @@ int main(int argc, char*argv[]){
         return 1;
     }
     for(int i = 0; i < count; i++){
-        printf("INSERT INTO all_songs (album_name, ep, album_release, track_number, track_name, artist) VALUES ('%s','%s','%s', %d, '%s','%s');\n", information[i].name, information[i].ep, information[i].date, information[i].number, information[i].track_name, information[i].artist);
+        printf("INSERT INTO albums (album_name, ep, album_release) VALUES ('%s','%s','%s');\n", information[i].name, information[i].ep, information[i].date);
     }
     free(information);
     return 0;
