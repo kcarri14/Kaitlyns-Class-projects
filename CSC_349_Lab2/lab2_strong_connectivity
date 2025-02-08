@@ -37,6 +37,7 @@ def strong_connectivity(G):
 	for node in G:
 		if node.name not in visited:
 			dfs_round1(node,G,visited,stack)
+			
 	visited.clear()
 	
 	while stack:
@@ -63,7 +64,7 @@ def read_file(filename):
 			raise ValueError("Graph must have one or more vertices")
 		G = list(node(name = i, in_edges=[],out_edges=[],previsit= -1, postvisit=-1, component=None) for i in range(v))
 		for l in lines[1:]:
-			tokens = l.split(",")
+			tokens = l.strip().split(",")
 			fromVertex,toVertex = (int(tokens[0]),int(tokens[1]))
 			G[fromVertex].out_edges.append(toVertex)
 			G[toVertex].in_edges.append(fromVertex)
