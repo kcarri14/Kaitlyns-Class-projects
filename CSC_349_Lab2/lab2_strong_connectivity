@@ -32,7 +32,7 @@ def strong_connectivity(G):
 	stack = collections.deque()
 	strongly_connected = []
     
-	for node in G.values():
+	for node in G():
 		if node.name not in visited:
 			dfs1(node,G,visited,stack)
 	visited.clear()
