@@ -17,30 +17,29 @@ def MST_Prim(G, root):
     T = []
     heapq.heappush(heap,root)
 
+ # while heap is not empty, pop v from heap and check if it is already in the MST (using v.in_MST)
     while heap:
+       
         v = heapq.heappop(heap)
         if v.in_MST:
             continue
-
-        v.in_MST = True
-        if v.parent != v:
-            T.append(v.name, v.parent.name)
-            total_weight += v.key
-        for neighbor, weight in v.out_edges:
-            if not neighbor.in_MST and weight < neighbor.key:
-                neighbor.key = weight
-                neighbor.parent = v
-                heapq.heappush(heap, neighbor)
-    # while heap is not empty, pop v from heap and check if it is already in the MST (using v.in_MST)
     # Then, if it is not, add it to the MST, append it to T and add its v.key to total weights
-            # We need to do this for every node not in the MST except the root, which is a special case
-            # You can identify the root since for it, v.parent = v
+        v.in_MST = True
+        # You can identify the root since for it, v.parent = v
+        if v.parent != v:
             # For formatting consistency of the, append the edge to the root as a tuple (v,v.parent)
-    # Finally, iterate over negighbors u
+            T.append((v.name, v.parent.name))
+            total_weight += v.key
+    # Finally, iterate over negighbors u        
+        for neighbor, weight in v.out_edges:
             #  for those whose edge cost is smaller than current key:
-                # update their key to the edge weight
+            if not neighbor.in_MST and weight < neighbor.key:
+                 # update their key to the edge weight
+                neighbor.key = weight
                 # update their parent to v
+                neighbor.parent = v
                 # add them to the heap
+                heapq.heappush(heap, neighbor)       
     return T, total_weight
 
 def MST_Kruskal(G,E):
@@ -54,36 +53,34 @@ def MST_Kruskal(G,E):
     from scipy.cluster.hierarchy import DisjointSet
     dijoint_set = DisjointSet(G)
     # Important operations in a disjoint set (see example of usage of each below)
-    print("Demonstration of Disjoint Set functionality")  
-    print("Before merging")
-    print(f"Subsets : {dijoint_set.subsets()}") # list subsets
-    print(f" Are a and b connected? {dijoint_set.connected('a','b')}") # check if two items are connected
-    print(f" The subset defined by a has {dijoint_set.subset('a')} as element, and {dijoint_set.__getitem__('a')} as representative") # check all elements in the set containing a givenitem, as well as its representative element
-    print(f" The subset defined by b has {dijoint_set.subset('b')} as element, and {dijoint_set.__getitem__('b')} as representative")
-    print("")
-    dijoint_set.merge('a','b') # We can merge the subsets given by two items. See results of the same operations after merging
-    print(f"Subsets : {dijoint_set.subsets()}")
-    print(f" Are a and b connected? {dijoint_set.connected('a','b')}")
-    print(f" The subset defined by a has {dijoint_set.subset('a')} as element, and {dijoint_set.__getitem__('a')} as representative")
-    print(f" The subset defined by b has {dijoint_set.subset('b')} as element, and {dijoint_set.__getitem__('b')} as representative")
-    print("")
+    # print("Demonstration of Disjoint Set functionality")  
+    # print("Before merging")
+    # print(f"Subsets : {dijoint_set.subsets()}") # list subsets
+    # print(f" Are a and b connected? {dijoint_set.connected('a','b')}") # check if two items are connected
+    # print(f" The subset defined by a has {dijoint_set.subset('a')} as element, and {dijoint_set.__getitem__('a')} as representative") # check all elements in the set containing a givenitem, as well as its representative element
+    # print(f" The subset defined by b has {dijoint_set.subset('b')} as element, and {dijoint_set.__getitem__('b')} as representative")
+    # print("")
+    # dijoint_set.merge('a','b') # We can merge the subsets given by two items. See results of the same operations after merging
+    # print(f"Subsets : {dijoint_set.subsets()}")
+    # print(f" Are a and b connected? {dijoint_set.connected('a','b')}")
+    # print(f" The subset defined by a has {dijoint_set.subset('a')} as element, and {dijoint_set.__getitem__('a')} as representative")
+    # print(f" The subset defined by b has {dijoint_set.subset('b')} as element, and {dijoint_set.__getitem__('b')} as representative")
+    # print("")
 
-    E.sort()
+ # Sort the edges by weight, then iterate over them in order
+    E.sort(key=lambda x: x[1])
 
-    for weight, u,v in E:
+ # For each edge, check if its two endpoints are already connected
+    
+    for (u, v), weight  in E:
+        # If they are NOT connected, connect them, add them to the tree and their weight to the total
         if not dijoint_set.connected(u,v):
             dijoint_set.merge(u,v)
             T.append((u,v))
-            total_weight = weight
+            total_weight += weight
+        # Otherwise, ignore the edge
         if len(T) == len(G) - 1:
             break
-            
-    
-    # Sort the edges by weight, then iterate over them in order
-    # For each edge, check if its two endpoints are already connected
-    # If they are NOT connected, connect them, add them to the tree and their weight to the total
-    # Otherwise, ignore the edge
-
     return T, total_weight
 
 
