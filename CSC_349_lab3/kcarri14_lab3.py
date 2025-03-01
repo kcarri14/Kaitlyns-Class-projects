@@ -26,7 +26,7 @@ def MST_Prim(G, root):
         if v.parent != v:
             T.append(v.name, v.parent.name)
             total_weight += v.key
-        for neighbor, weight in G[v.name]:
+        for neighbor, weight in v.out_edges:
             if not neighbor.in_MST and weight < neighbor.key:
                 neighbor.key = weight
                 neighbor.parent = v
