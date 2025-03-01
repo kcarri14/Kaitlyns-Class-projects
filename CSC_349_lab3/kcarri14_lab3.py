@@ -17,10 +17,20 @@ def MST_Prim(G, root):
     T = []
     heapq.heappush(heap,root)
 
-    # --=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-#
-    # Your algorithm starts here here  #
-    # --=-=-=-=-=-=-==-=-=-=-=-==-=-=-=#
+    while heap:
+        v = heapq.heappop(heap)
+        if v.in_MST:
+            continue
 
+        v.in_MST = True
+        if v.parent != v:
+            T.append(v.name, v.parent.name)
+            total_weight += v.key
+        for neighbor, weight in G[v.name]:
+            if not neighbor.in_MST and weight < neighbor.key:
+                neighbor.key = weight
+                neighbor.parent = v
+                heapq.heappush(heap, neighbor)
     # while heap is not empty, pop v from heap and check if it is already in the MST (using v.in_MST)
     # Then, if it is not, add it to the MST, append it to T and add its v.key to total weights
             # We need to do this for every node not in the MST except the root, which is a special case
@@ -58,10 +68,17 @@ def MST_Kruskal(G,E):
     print(f" The subset defined by b has {dijoint_set.subset('b')} as element, and {dijoint_set.__getitem__('b')} as representative")
     print("")
 
-    # --=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-#
-    # Your algorithm starts here here  #
-    # --=-=-=-=-=-=-==-=-=-=-=-==-=-=-=#    
+    E.sort()
 
+    for weight, u,v in E:
+        if not dijoint_set.connected(u,v):
+            dijoint_set.merge(u,v)
+            T.append((u,v))
+            total_weight = weight
+        if len(T) == len(G) - 1:
+            break
+            
+    
     # Sort the edges by weight, then iterate over them in order
     # For each edge, check if its two endpoints are already connected
     # If they are NOT connected, connect them, add them to the tree and their weight to the total
